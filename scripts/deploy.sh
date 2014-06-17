@@ -16,4 +16,4 @@ echo JAVA_HOME=/usr/lib/jvm/java-6-openjdk-amd64 | sudo tee -a /etc/environment
 sudo $scriptdir/helloworld.sh
 sudo $scriptdir/R.sh
 sudo $scriptdir/julia.sh
-
+sudo $scriptdir/tangelo.sh
