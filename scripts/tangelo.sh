@@ -1,8 +1,20 @@
 #!/usr/bin/env bash
 
-sudo apt-get install python-pip python-dev -y
+# an example of how to create a user semi-securely
+#PASSWORD=never_put_passwords_on_github
+sudo apt-get -y install makepasswd
+PASSWORD=`cat /dev/urandom | head -n 1 | base64 | fold -w 10 | head -n 1`
+export SHELL=/bin/bash
+echo $PASSWORD | sudo tee -a /root/tangelo_password.txt
+passhash=$(sudo makepasswd --clearfrom=/root/tangelo_password.txt --crypt-md5 |awk '{print $2}')
+sudo useradd tangelo -m -p $passhash
+sudo usermod -s /bin/bash tangelo
+# end create user
+
+sudo apt-get install -y python-pip python-dev
+sudo apt-get install -y git
 sudo pip install tangelo
-rm -rf /home/vagrant/tangelo-webroot
-sudo -u vagrant mkdir -p /home/vagrant/tangelo-webroot
-sudo -u vagrant -H git clone https://github.com/XDATA-Year-2/internet-graph /home/vagrant/tangelo-webroot/internet-graph
-sudo -u vagrant -H tangelo restart --logdir /home/vagrant --root /home/vagrant/tangelo-webroot
+sudo rm -rf /home/tangelo/tangelo-webroot
+sudo -u tangelo mkdir -p /home/tangelo/tangelo-webroot
+sudo -u tangelo -H git clone https://github.com/XDATA-Year-2/internet-graph /home/tangelo/tangelo-webroot/internet-graph
+sudo -u tangelo -H tangelo restart --logdir /home/tangelo --root /home/tangelo/tangelo-webroot
