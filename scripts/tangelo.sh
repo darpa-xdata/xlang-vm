@@ -3,7 +3,6 @@
 # create tangelo user
 sudo apt-get -y install makepasswd
 PASSWORD=`cat /dev/urandom | head -n 1 | base64 | fold -w 10 | head -n 1`
-export SHELL=/bin/bash
 echo $PASSWORD | sudo tee /root/tangelo_password.txt
 passhash=$(sudo makepasswd --clearfrom=/root/tangelo_password.txt --crypt-md5 |awk '{print $2}')
 sudo useradd tangelo -m -p $passhash
