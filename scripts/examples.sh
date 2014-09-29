@@ -3,6 +3,7 @@
 echo "test for" > /echo.txt
 # do this before installing software
 sudo apt-get update
+sudo apt-get upgrade
 
 # -y will install packages without human interaction
 sudo apt-get -y install  openjdk-6-jdk
